@@ -8,11 +8,19 @@ function App() {
     <>
       <nav className='navBar'>
         <ul>
-          <HomePage/>
-          <li>About</li>
-          <li>Contact</li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Movies</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
         </ul>
       </nav>
+
+      <HomePage/>
     </>
   )
 }
