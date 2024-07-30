@@ -1,8 +1,8 @@
 import HomePage from './components/HomePage'
+import FilmsPage from './components/FilmsPage'
 import './App.css'
 
 function App() {
-  
 
   return (
     <>
@@ -20,7 +20,10 @@ function App() {
         </ul>
       </nav>
 
-      <HomePage/>
+      <main>
+        <HomePage />
+        <FilmsPage />
+      </main>
     </>
   )
 }
