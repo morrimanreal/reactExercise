@@ -1,0 +1,23 @@
+.movieCard {
+  list-style-type: none;
+}
+
+.movieInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+  text-align: start;
+}
+
+.movieCard>h2 {
+  font-size: 2rem;
+}
+
+.movieInfo>p {
+  font-size: 1.2rem;
+}
+
+.movieInfo img {
+  width: 100%;
+  border-radius: 12px;
+}

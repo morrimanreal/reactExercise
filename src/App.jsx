@@ -1,27 +1,30 @@
-import HomePage from './components/HomePage'
+// import HomePage from './components/HomePage'
+// import FilmsPage from './components/FilmsPage'
+
+//rather than have a bunch of import, better to import them all together(as per this example, imports were all put in index.js under pages)
+import { HomePage, FilmsPage } from "./pages/index";
+import { BrowserRouter, NavLink, Routes, Route } from "react-router-dom";
 import './App.css'
 
 function App() {
-  
 
   return (
-    <>
-      <nav className='navBar'>
+    <BrowserRouter>
+      <nav>
         <ul>
           <li>
-            <a href="#">Home</a>
+            <NavLink to="/">Take Me Home</NavLink>
           </li>
           <li>
-            <a href="#">Movies</a>
-          </li>
-          <li>
-            <a href="#">About</a>
+            <NavLink to="/films">Go To Films</NavLink>
           </li>
         </ul>
       </nav>
-
-      <HomePage/>
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/films" element={<FilmsPage />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
