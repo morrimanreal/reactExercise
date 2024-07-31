@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "./FilmsPage.css";
+import { filterFilmsByDirector, getListOf } from "../helpers/film.helpers";
 
 export default function FilmsPage() {
   const [movies, setMovies] = useState([]);
-  const [sortSelection, setSortSelection] = useState("releaseDate");
+  const [sortSelection, setSortSelection] = useState("title");
+  const [searchDirector, setSearchDirector] = useState("");
 
   useEffect(() => {
     fetch(`https://studioghibliapi-d6fc8.web.app/films`)
@@ -46,26 +48,49 @@ export default function FilmsPage() {
 
   //derived State... sort = mutate the whole array, toSorted = sort the array and return a whole new sorted array
   const sortedMovies = sortMovies(movies, sortSelection);
+  const filteredMovies = filterFilmsByDirector(sortedMovies, searchDirector);
+  const uniqueDirectors = getListOf(movies, "director");
 
   return (
     <>
       <h1>Studio Ghibli Films</h1>
-      <label htmlFor="sortSelect">Sort by: </label>
-      <select
-        name="sortSelect"
-        id="sortSelect"
-        value={sortSelection}
-        onChange={(changeEvent) => {
-          setSortSelection(changeEvent.target.value);
-        }}
-      >
-        <option value="releaseDate"> Release Date</option>
-        <option value="director"> Director</option>
-        <option value="title"> Title</option>
-        <option value="score"> Rotten Tomatoes Score</option>
-      </select>
+      <form>
+        <div className="formGroup">
+          <label htmlFor="sortSelect">Sort by </label>
+          <select
+            name="sortSelect"
+            id="sortSelect"
+            value={sortSelection}
+            onChange={(changeEvent) => {
+              setSortSelection(changeEvent.target.value);
+            }}
+          >
+            <option value="releaseDate"> Release Date</option>
+            <option value="director"> Director</option>
+            <option value="title"> Title</option>
+            <option value="score"> Rotten Tomatoes Score</option>
+          </select>
+          <br />
+          <label htmlFor="directorSelect">Filter by Director </label>
+          <select
+            name="directorSelect"
+            id="directorSelect"
+            value={searchDirector} onChange={(changeEvent) => {
+              setSearchDirector(changeEvent.target.value);
+            }}
+          >
+            <option value="">All Directors</option>
+            {uniqueDirectors.map((director, index) => {
+              return <option key={director + index} value={director}>
+                {director}
+              </option>
+            })}
+          </select>
+        </div>
+
+      </form>
       <ul>
-        {sortedMovies.map((movie) => {
+        {filteredMovies.map((movie) => {
           return <li key={movie.id} className="movieCard">
             <h2>{movie.title}</h2>
             <div className="movieInfo">
