@@ -39,3 +39,41 @@ export function getListOf(list, prop) {
   return Object.keys(tempObj);
 
 }
+
+/**
+ * 
+ * @param {Array} list An array of "movie" objects
+ * @returns An object with the accumulated score, average score, total count, and latest release fate for the given list of movies
+ */
+
+export function getFilmStats(list) {
+  //The total movie count is simply the length of the array
+  const total = list.length;
+
+  // let acc_score = 0;
+  // for (let i = 0; i < list.length; i++) {
+  //   acc_score += Number(list[i].rt_score);
+  // }
+
+  const acc_score = list.reduce((acc, curr) => {
+    return acc + Number(curr.rt_score);
+  }, 0);
+
+  const avg_score = acc_score / total;
+
+  const latest = Math.max(...list.map((movie) => Number(movie.release_date)));
+
+  // let mostRecent = Number(list[0].release_date);
+  // for (let i = 1; i < list.length; i++) {
+  //   if (list[i].release_date > mostRecent) {
+  //     mostRecent = Number(list[i].release_date);
+  //   }
+  // }
+
+  return {
+    acc_score,
+    avg_score,
+    total,
+    latest
+  }
+}

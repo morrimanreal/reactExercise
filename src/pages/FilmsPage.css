@@ -26,3 +26,26 @@ select,
 label {
   font-size: 1.2rem;
 }
+
+.filmStats>summary {
+  font-size: 1.6rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+
+.filmStats>div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.filmStats table {
+  font-size: 1.5rem;
+}
+
+.filmStats th,
+td {
+  padding-inline: .5rem;
+}

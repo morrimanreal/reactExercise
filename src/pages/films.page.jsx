@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./FilmsPage.css";
-import { filterFilmsByDirector, getListOf } from "../helpers/film.helpers";
+import { filterFilmsByDirector, getFilmStats, getListOf } from "../helpers/film.helpers";
+import { Link } from 'react-router-dom'
 
 export default function FilmsPage() {
   const [movies, setMovies] = useState([]);
@@ -50,6 +51,7 @@ export default function FilmsPage() {
   const sortedMovies = sortMovies(movies, sortSelection);
   const filteredMovies = filterFilmsByDirector(sortedMovies, searchDirector);
   const uniqueDirectors = getListOf(movies, "director");
+  const { avg_score, total, latest } = getFilmStats(filteredMovies);
 
   return (
     <>
@@ -89,10 +91,34 @@ export default function FilmsPage() {
         </div>
 
       </form>
+      <details className="filmStats">
+        <summary>Film Stats</summary>
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th>Film Count</th>
+                <th>Average Rating</th>
+                <th>Latest Movie</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{total}</td>
+                <td>{avg_score.toFixed(2)}</td>
+                <td>{latest}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
       <ul>
         {filteredMovies.map((movie) => {
           return <li key={movie.id} className="movieCard">
-            <h2>{movie.title}</h2>
+            <Link to={`/film/${movie.id}`}>
+              <h2>{movie.title}</h2>
+            </Link>
             <div className="movieInfo">
               <p>{movie.description}</p>
               <img src={movie.image} alt={movie.title} />
